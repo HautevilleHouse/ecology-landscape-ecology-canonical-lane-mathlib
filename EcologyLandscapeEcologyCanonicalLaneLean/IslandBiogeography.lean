@@ -20,7 +20,14 @@ def equilibrium_species (s : BiogeographyState α) : ℕ :=
   if denominator > 0 then (numerator / denominator).toNat else 0
 
 theorem equilibrium_species_nonzero (s : BiogeographyState α) (hImmig : s.immigrationRate > 0) (hArea : s.islandArea > 0) (hExt : s.extinctionRate > 0) : equilibrium_species s > 0 := by
-  sorry
+  unfold equilibrium_species
+  have hden : numerator + (s.extinctionRate : ℝ) * (s.islandArea : ℝ) > 0 := by
+    nlinarith
+  have hnum : numerator > 0 := by
+    nlinarith
+  simp [hden, hnum]
+  where
+    numerator : ℝ := (s.immigrationRate : ℝ) * (s.islandArea : ℝ)
 
 end EcologyLandscapeEcologyCanonicalLaneLean
 end HautevilleHouse
